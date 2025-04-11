@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 from app.services.ai_service import AIService
 from app.models.journal import JournalEntry
+from app.models.bulk import BulkRequest
 
 api_router = APIRouter()
 
@@ -14,7 +15,7 @@ async def analyse_journal(entry: JournalEntry):
 
 
 @api_router.post("/ai_analyse_bulk")
-async def analyse_journal_bulk(data: dict):
+async def analyse_journal_bulk(data: BulkRequest):
     """
     data might be: { "entries": [ { "title": "...", "content": "...", ... }, ... ] }
     We'll combine these into one big prompt for aggregated analysis.
@@ -24,11 +25,13 @@ async def analyse_journal_bulk(data: dict):
     # Build a combined string from all entries
     combined_text = ""
     for idx, e in enumerate(data["entries"]):
-        combined_text += (f"Entry #{idx+1}:\n"
-                          f"Title: {e['title']}\n"
-                          f"Content: {e['content']}\n"
-                          f"Tag: {e['tag']}\n"
-                          f"Mood: {e['mood']}\n\n")
+        combined_text += (
+            f"Entry #{idx+1}:\n"
+            f"Title: {e.title}\n"      
+            f"Content: {e.content}\n" 
+            f"Tag: {e.tag}\n"
+            f"Mood: {e.mood}\n\n"
+        )
 
     # Pass combined_text to AI
     bulk_result = ai_service.analyse_bulk_entries(combined_text)

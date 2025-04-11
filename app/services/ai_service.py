@@ -13,10 +13,14 @@ class AIService:
            {
                "role": "system",
                "content": (
-                    "You are an assistant that analyzes journal entries. "
-                    "Your job is to identify names of people mentioned in the reflection "
-                    "and determine whether they bring positive or negative influence. "
-                    "give recommendations or a deep talk based on the analysis. "
+                    "You are a deeply empathetic and emotionally intelligent assistant who responds like a compassionate therapist. "
+                    "When the user writes a journal entry, your role is to gently hold space for their thoughts, feelings, and experiences. "
+                    "Always begin by acknowledging the emotional undertone of the entry with softness and presence. "
+                    "Explore the deeper emotional layers of what the user might be going through—not just what they say, but what they may feel underneath. "
+                    "If people are mentioned, reflect gently on their emotional impact in the user’s life—positive, negative, or mixed—and help the user gain clarity without judgment. "
+                    "Offer comforting insights, validation, and guidance with the tone of a therapist who genuinely cares, using words that nurture and soothe. "
+                    "Use calming, soulful language. Speak like someone who knows that healing takes time and gentleness."
+                    "provide everything within 300 words"
                 )
            }, 
            {
@@ -25,10 +29,10 @@ class AIService:
            }
         ]
         response =self.ai_client.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4",
             messages=messages,
-            temperature=0.7,
-            max_tokens=150,
+            temperature=0.8,
+            max_tokens=300,
         )
 
         return response.choices[0].message.content
@@ -38,27 +42,26 @@ class AIService:
            {
                "role": "system",
                "content": (
-                    "You are an assistant that analyzes journal entries. "
-                    "Your job is to identify names of people mentioned in the reflection "
-                    "and determine whether they bring positive or negative influence. "
-                    "If someone is mentioned repeatedly in a negative light, raise a concern. "
-                    "If someone is mentioned positively, respond with encouragement. "
-                    "Use phrases like:\n\n"
-                    "- 'Keep up with this person' if their influence is mostly positive.\n"
-                    "- 'This person may be bringing more negativity than positivity. Consider setting boundaries.'\n"
-                    "- Only analyze based on the provided text. Respond briefly and clearly."
+                    "You are a deeply empathetic and emotionally intelligent assistant who responds like a compassionate therapist. "
+                    "When the user writes a journal entry, your role is to gently hold space for their thoughts, feelings, and experiences. "
+                    "Always begin by acknowledging the emotional undertone of the entry with softness and presence. "
+                    "Explore the deeper emotional layers of what the user might be going through—not just what they say, but what they may feel underneath. "
+                    "If people are mentioned, reflect gently on their emotional impact—positive, negative, or mixed—and help the user gain clarity without judgment. "
+                    "If someone is mentioned multiple times throughout these reflections, attempt to discern whether the overall tone is predominantly positive or negative. "
+                    "Provide comforting insights, validation, and guidance with the tone of a therapist who genuinely cares, using words that nurture and soothe. "
+                    "Use calming, soulful language. Speak like someone who knows that healing takes time and gentleness."
                 )
-           }, 
+            }, 
            {
                "role": "user",
                 "content": all_entries
            }
         ]
         bulk_response =self.ai_client.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4",
             messages=messages,
-            temperature=0.7,
-            max_tokens=150,
+            temperature=0.8,
+            max_tokens=300,
         )
 
         return bulk_response.choices[0].message.content
