@@ -16,15 +16,12 @@ async def analyse_journal(entry: JournalEntry):
 
 @api_router.post("/ai_analyse_bulk")
 async def analyse_journal_bulk(data: BulkRequest):
-    """
-    data might be: { "entries": [ { "title": "...", "content": "...", ... }, ... ] }
-    We'll combine these into one big prompt for aggregated analysis.
-    """
+   
     ai_service = AIService()
 
     # Build a combined string from all entries
     combined_text = ""
-    for idx, e in enumerate(data["entries"]):
+    for idx, e in enumerate(data.entries):
         combined_text += (
             f"Entry #{idx+1}:\n"
             f"Title: {e.title}\n"      
