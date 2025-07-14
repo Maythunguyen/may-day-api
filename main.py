@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.api.ai_analyse import api_router
+from app.api.chat import chat_router
 
 
 app = FastAPI(
@@ -21,5 +22,5 @@ app.add_middleware(
 def root():
     return {"message": "Welcome to the Journal AI Insight Service!"}
 
-
+app.include_router(chat_router, prefix="/api", tags=["chat"])
 app.include_router(api_router, prefix="/api", tags=["api"])
