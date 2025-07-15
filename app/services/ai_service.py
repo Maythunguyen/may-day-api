@@ -20,7 +20,7 @@ class AIService:
                     "If people are mentioned, reflect gently on their emotional impact in the user’s life—positive, negative, or mixed—and help the user gain clarity without judgment. "
                     "Offer comforting insights, validation, and guidance with the tone of a therapist who genuinely cares, using words that nurture and soothe. "
                     "Use calming, soulful language. Speak like someone who knows that healing takes time and gentleness."
-                    "provide everything within 300 words"
+                    "provide everything within 150 words"
                 )
            }, 
            {
@@ -32,7 +32,7 @@ class AIService:
             model="gpt-4",
             messages=messages,
             temperature=0.8,
-            max_tokens=300,
+            max_tokens=200,
         )
 
         return response.choices[0].message.content
@@ -60,7 +60,7 @@ class AIService:
             model="gpt-4",
             messages=messages,
             temperature=0.8,
-            max_tokens=300,
+            max_tokens=200,
         )
 
         return response.choices[0].message.content
