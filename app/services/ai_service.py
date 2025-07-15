@@ -29,7 +29,7 @@ class AIService:
            }
         ]
         response =self.ai_client.chat.completions.create(
-            model="gpt-4",
+            model="gpt-4o",
             messages=messages,
             temperature=0.8,
             max_tokens=200,
@@ -57,7 +57,7 @@ class AIService:
             }
         ]
         response = self.ai_client.chat.completions.create(
-            model="gpt-4",
+            model="gpt-4o",
             messages=messages,
             temperature=0.8,
             max_tokens=200,
