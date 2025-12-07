@@ -7,6 +7,7 @@ print("🔑 OpenAI Key:", env["open_api_key"])
 class AIService:
     def __init__(self):
         self.ai_client = OpenAI(api_key=env["open_api_key"])
+        self.history = []
 
     def analyse_single_entry(self, entry: str) -> dict:
         messages = [
@@ -39,6 +40,8 @@ class AIService:
     
 
     def message_with_ai(self, message: str) -> str:
+        self.history.append({"role": "user", "content": message})
+
         messages = [
             {
                 "role": "system",
@@ -51,17 +54,17 @@ class AIService:
                     "You're here to offer comfort, clarity, and gentle encouragement — not therapy, but a soul-level conversation."
                 )
             },
-            {
-                "role": "user",
-                "content": message
-            }
-        ]
+        ] + self.history
+
         response = self.ai_client.chat.completions.create(
             model="gpt-4o",
             messages=messages,
             temperature=0.8,
             max_tokens=200,
         )
+        ai_response = response.choices[0].message.content
+        self.history.append({"role": "assistant", "content": ai_response})
 
-        return response.choices[0].message.content
+       
+        return ai_response
     
